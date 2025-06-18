@@ -4,7 +4,7 @@ from google import genai
 import re
 import pandas as pd
 import os
-import streamit as st
+import streamlit as st
 # Initialize Gemini
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
