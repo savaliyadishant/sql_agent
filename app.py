@@ -1,7 +1,5 @@
 import streamlit as st
-import streamlit_authenticator as stauth
 import yaml
-from yaml.loader import SafeLoader
 import json
 import pandas as pd
 import time
@@ -17,28 +15,30 @@ from core.sql_validator import validate_sql
 # Set page configuration
 st.set_page_config(page_title="Gen AI SQL Agent", layout="wide")
 
-# Load user credentials
-with open("config/config.yaml") as file:
-    config = yaml.load(file, Loader=SafeLoader)
+# Simple login
+def login_form():
+    st.sidebar.title("🔐 Login")
+    username = st.sidebar.text_input("Username")
+    password = st.sidebar.text_input("Password", type="password")
+    if st.sidebar.button("Login"):
+        if username == "admin" and password == "admin":
+            st.session_state.logged_in = True
+            st.session_state.username = username
+            st.session_state.name = "Admin"
+            st.experimental_rerun()
+        else:
+            st.sidebar.error("❌ Invalid credentials")
 
-# Authenticator setup
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days']
-)
+# Login logic
+if "logged_in" not in st.session_state:
+    login_form()
+elif st.session_state.logged_in:
+    st.sidebar.success(f"✅ Logged in as: {st.session_state.name} ({st.session_state.username})")
+    st.sidebar.button("Logout", on_click=lambda: st.session_state.clear())
 
-# Login form
-name, authentication_status, username = authenticator.login("Login")
+    # Define role
+    role = "admin"
 
-# If login successful
-if authentication_status:
-    authenticator.logout("Logout", "sidebar")
-    st.sidebar.success(f"✅ Logged in as: {name} ({username})")
-    # Map username to role
-    role = "admin" if username == "admin" else "analyst"
-    st.sidebar.info(f"🔐 Your role: {role}")
     # Load role permissions
     with open("config/roles.json") as f:
         ROLE_PERMISSIONS = json.load(f)
@@ -82,15 +82,11 @@ if authentication_status:
 
                         placeholder = st.empty()
                         typed_text = ""
-
-                        # Show word-by-word with a short delay
                         for word in natural_response.split():
                             typed_text += word + " "
-                            placeholder.markdown(typed_text + "▌")  # Simulate typing cursor  # Adjust speed if needed
+                            placeholder.markdown(typed_text + "▌")
                             time.sleep(0.1)
-                        # Finalize without cursor
                         placeholder.markdown(typed_text.strip())
-
                     else:
                         st.warning("⚠️ Query executed successfully but returned no data.")
                 else:
@@ -99,10 +95,5 @@ if authentication_status:
     elif screen == "Configuration":
         render_config_screen()
 
-# If login failed
-elif authentication_status is False:
-    st.error("❌ Incorrect username or password")
-
-# If waiting for login
-elif authentication_status is None:
-    st.warning("🔐 Please enter your username and password to continue.")
+else:
+    st.warning("🔐 Please login to access the application.")
