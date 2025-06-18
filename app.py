@@ -15,29 +15,37 @@ from core.sql_validator import validate_sql
 # Set page configuration
 st.set_page_config(page_title="Gen AI SQL Agent", layout="wide")
 
-# Simple login
-def login_form():
-    st.sidebar.title("🔐 Login")
-    username = st.sidebar.text_input("Username")
-    password = st.sidebar.text_input("Password", type="password")
-    if st.sidebar.button("Login"):
-        if username == "admin" and password == "admin":
-            st.session_state.logged_in = True
-            st.session_state.username = username
-            st.session_state.name = "Admin"
-            st.experimental_rerun()
-        else:
-            st.sidebar.error("❌ Invalid credentials")
-
-# Login logic
+# Initialize session state
 if "logged_in" not in st.session_state:
-    login_form()
-elif st.session_state.logged_in:
-    st.sidebar.success(f"✅ Logged in as: {st.session_state.name} ({st.session_state.username})")
-    st.sidebar.button("Logout", on_click=lambda: st.session_state.clear())
+    st.session_state.logged_in = False
+    st.session_state.username = ""
+    st.session_state.name = ""
 
-    # Define role
-    role = "admin"
+# Login form
+if not st.session_state.logged_in:
+    with st.sidebar:
+        st.title("🔐 Login")
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        login_clicked = st.button("Login")
+
+        if login_clicked:
+            if username == "admin" and password == "admin":
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.name = "Admin"
+            else:
+                st.error("❌ Invalid credentials")
+
+# Main app
+if st.session_state.logged_in:
+    st.sidebar.success(f"✅ Logged in as: {st.session_state.name} ({st.session_state.username})")
+    if st.sidebar.button("Logout"):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+        st.session_state.name = ""
+
+    role = "admin"  # Hardcoded role for now
 
     # Load role permissions
     with open("config/roles.json") as f:
@@ -94,6 +102,5 @@ elif st.session_state.logged_in:
 
     elif screen == "Configuration":
         render_config_screen()
-
 else:
-    st.warning("🔐 Please login to access the application.")
+    st.info("🔐 Please enter your username and password to continue.")
