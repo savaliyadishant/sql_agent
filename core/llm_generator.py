@@ -4,9 +4,8 @@ from google import genai
 import re
 import pandas as pd
 import os
-load_dotenv()
 # Initialize Gemini
-client = genai.Client(api_key=os.getenv(GEMINI_API_KEY))
+client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 def clean_sql(text):
     text = re.sub(r"```(?:sql)?\s*([\s\S]*?)\s*```", r"\1", text)
