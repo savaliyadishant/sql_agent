@@ -1,0 +1,8 @@
+streamlit
+pandas
+sqlglot
+streamlit-authenticator
+google-auth
+google-cloud-storage
+pyyaml
+sqlalchemy

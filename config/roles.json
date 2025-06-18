@@ -1,0 +1,16 @@
+{
+  "analyst": {
+    "allow_dml": false,
+    "tables": {
+      "customers": ["id", "name", "email"],
+      "orders": ["id", "customer_id", "amount"]
+    }
+  },
+  "admin": {
+    "allow_dml": true,
+    "tables": {
+      "customers": ["id", "name", "email", "created_at"],
+      "orders": ["id", "customer_id", "order_date", "amount"]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+timestamp,database,sql_query,user_query,role
+2025-06-17 16:44:52,Sample,SELECT sum(Amount) FROM Orders,Show me total sales in amount ,analyst
+2025-06-17 16:45:50,Inventory,SELECT SUM(quantity) FROM sales AS t1 INNER JOIN products AS t2 ON t1.product_id = t2.product_id WHERE t2.category = 'Furniture',Show me total quantity of furniture,analyst
+2025-06-17 16:57:40,Sample,SELECT COUNT(*) FROM orders,Give me total  numbers of orders,analyst
+2025-06-17 17:33:57,Inventory,DELETE FROM products WHERE category = 'accesory';,delete all records where products category is accesory,admin
+2025-06-17 17:34:20,Inventory,SELECT DISTINCT category FROM products,give me all category in products,admin
+2025-06-17 17:34:57,Inventory,DELETE FROM products WHERE category = 'Accessory';,delete all products where category is Accessory,admin
+2025-06-17 17:35:27,Inventory,SELECT DISTINCT category FROM products,please give me all category in product,admin
+2025-06-17 17:35:57,Inventory,DELETE FROM products WHERE category = 'accessory';,delete all products with category accessory,admin
+2025-06-17 17:36:13,Inventory,SELECT DISTINCT category FROM products,give me all product category,admin
+2025-06-17 17:36:27,Inventory,SELECT * FROM products,give me all product name and other details,admin
+2025-06-17 18:08:47,Sample,SELECT * FROM customers,give me list of all customers,admin
+2025-06-17 18:10:19,Sample,SELECT email FROM customers,give me list of all customer email ids,admin
+2025-06-17 18:10:52,Sample,SELECT email FROM Customers,list of all customer's email,admin
+2025-06-17 18:11:56,Sample,SELECT email FROM customers,give me list of customers email,admin
+2025-06-17 18:12:40,Sample,SELECT email FROM Customers,list of all customer's email,admin
+2025-06-17 18:13:26,Sample,SELECT email FROM customers,give me list of customers email,admin
+2025-06-17 18:55:56,Sample,SELECT COUNT(*) FROM customers,otal number of customers?,admin

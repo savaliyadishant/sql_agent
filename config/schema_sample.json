@@ -1,0 +1,22 @@
+{
+  "tables": [
+    {
+      "name": "customers",
+      "columns": [
+        {"name": "customer_id", "type": "INTEGER", "key": "PRIMARY"},
+        {"name": "name", "type": "TEXT"},
+        {"name": "email", "type": "TEXT"},
+        {"name": "country", "type": "TEXT"}
+      ]
+    },
+    {
+      "name": "orders",
+      "columns": [
+        {"name": "order_id", "type": "INTEGER", "key": "PRIMARY"},
+        {"name": "customer_id", "type": "INTEGER", "foreign_key": "customers.customer_id"},
+        {"name": "order_date", "type": "TEXT"},
+        {"name": "amount", "type": "REAL"}
+      ]
+    }
+  ]
+}

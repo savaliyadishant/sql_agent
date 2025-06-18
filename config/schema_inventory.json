@@ -1,0 +1,23 @@
+{
+  "database": "Inventory",
+  "tables": [
+    {
+      "name": "products",
+      "columns": [
+        { "name": "product_id", "type": "INTEGER", "primary_key": true },
+        { "name": "name", "type": "TEXT" },
+        { "name": "category", "type": "TEXT" },
+        { "name": "price", "type": "REAL" }
+      ]
+    },
+    {
+      "name": "sales",
+      "columns": [
+        { "name": "sale_id", "type": "INTEGER", "primary_key": true },
+        { "name": "product_id", "type": "INTEGER" },
+        { "name": "quantity", "type": "INTEGER" },
+        { "name": "sale_date", "type": "TEXT" }
+      ]
+    }
+  ]
+}
