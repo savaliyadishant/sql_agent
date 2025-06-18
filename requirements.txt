@@ -1,7 +1,7 @@
 streamlit
 pandas
 sqlglot
-streamlit-authenticator
+streamlit-authenticator>=0.3.0
 google-auth
 google-cloud-storage
 pyyaml
