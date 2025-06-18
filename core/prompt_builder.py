@@ -1,7 +1,7 @@
 import json
 import os
 
-def load_schema(selected_db: str):  # 🚨 NOT a list anymore
+def load_schema(selected_db: str):
     schema_filename = f"config/schema_{selected_db.lower()}.json"
     if os.path.exists(schema_filename):
         with open(schema_filename, "r") as f:
@@ -24,19 +24,19 @@ def format_schema_for_prompt(schema_json):
         formatted += "\n"
     return formatted
 
-def build_prompt(user_query, role,selected_db):
+def build_prompt(user_query, role, selected_db):
     schema = load_schema(selected_db)
     schema_text = format_schema_for_prompt(schema)
-    print(schema_text)
-    prompt = f"""You are a SQL expert agent.
 
-    Your role is: `{role}`
+    # 🔁 Load prompt template from file
+    with open("config/prompt_template.txt", "r") as f:
+        template = f.read()
 
-    Here is the database schema:
-    {schema_text}
+    # 🔀 Format the template with variables
+    prompt = template.format(
+        user_query=user_query,
+        role=role,
+        schema_text=schema_text
+    )
 
-    Generate a SQLite-compatible SQL query for the following natural language request:
-    "{user_query}"
-    Please only output sql query no other text.
-    """
     return prompt
