@@ -6,7 +6,7 @@ import pandas as pd
 import os
 
 # Initialize Gemini
-client = genai.Client(api_key="AIzaSyATi_kF8HPP6P6Tb3zYMG1EGkoUy-phu6k")
+client = genai.Client(api_key="")
 
 def clean_sql(text):
     text = re.sub(r"```(?:sql)?\s*([\s\S]*?)\s*```", r"\1", text)
