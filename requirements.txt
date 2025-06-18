@@ -6,3 +6,4 @@ google-auth
 google-cloud-storage
 pyyaml
 sqlalchemy
+google-genai
